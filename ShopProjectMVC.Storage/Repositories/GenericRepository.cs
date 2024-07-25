@@ -7,17 +7,16 @@ public class GenericRepository : IRepository
 {
     private readonly ShopProjectContext _context;
 
-    public GenericRepository(string connectionString)
+    public GenericRepository(ShopProjectContext context)
     {
-        var options = new DbContextOptionsBuilder<ShopProjectContext>()
-            .UseSqlServer(connectionString)
-            .Options;
-        _context = new ShopProjectContext(options);
+        _context = context;
     }
 
-    public Task<T> Add<T>(T entity) where T : class
+    public async Task<T> Add<T>(T entity) where T : class
     {
-        throw new NotImplementedException();
+        var obj = _context.Add(entity);
+        await _context.SaveChangesAsync();
+        return obj.Entity;
     }
 
     public Task Delete<T>(int id) where T : class

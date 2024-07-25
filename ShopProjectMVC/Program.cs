@@ -6,11 +6,18 @@ using ShopProjectMVC.Storage.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=ProductsDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
+var connectionString = builder.Configuration.GetConnectionString("Local");
 
 builder.Services.AddDbContext<ShopProjectContext>(options => options.UseSqlServer(connectionString));
-builder.Services.AddTransient<IRepository, GenericRepository>();
+
+builder.Services.AddScoped<IRepository, GenericRepository>();
 builder.Services.AddTransient<IOrderService, OrderService>();
+builder.Services.AddTransient<IUserService, UserService>();
+
+//builder.Services.AddTransient - creates object every time
+//builder.Services.AddScoped    - creates object every request
+//builder.Services.AddSingleton - creates object once
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
@@ -28,6 +35,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=User}/{action=Login}/{id?}");
 
 app.Run();

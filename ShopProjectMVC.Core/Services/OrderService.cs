@@ -5,7 +5,7 @@ namespace ShopProjectMVC.Core.Services;
 
 public class OrderService : IOrderService
 {
-    private readonly IRepository _repository;
+    private readonly IRepository _repository;    
 
     public OrderService(IRepository repository)
     {
