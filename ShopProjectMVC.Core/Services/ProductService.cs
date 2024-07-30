@@ -14,7 +14,7 @@ public class ProductService : IProductService
 
     public Task<Product> AddProduct(Product product)
     {
-        throw new NotImplementedException();
+        return _repository.Add(product);
     }
 
     public Task<Order> BuyProduct(int userId, int productId)
@@ -24,12 +24,17 @@ public class ProductService : IProductService
 
     public Task DeleteProduct(int id)
     {
-        throw new NotImplementedException();
+        return _repository.Delete<Product>(id);
     }
 
     public IEnumerable<Product> GetAll()
     {
         return _repository.GetAll<Product>();
+    }
+
+    public IEnumerable<Category> GetAllCategories()
+    {
+        return _repository.GetAll<Category>();
     }
 
     public Task<Product> GetProductById(int id)

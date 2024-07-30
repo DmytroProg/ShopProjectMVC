@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("Local");
 
-builder.Services.AddDbContext<ShopProjectContext>(options => options.UseSqlServer(connectionString));
+builder.Services.AddDbContext<ShopProjectContext>();
 
 builder.Services.AddScoped<IRepository, GenericRepository>();
 builder.Services.AddTransient<IOrderService, OrderService>();
