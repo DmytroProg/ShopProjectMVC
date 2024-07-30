@@ -14,7 +14,7 @@ public class OrdersController : Controller
 
     public IActionResult Index()
     {
-        var orders = _orderService.GetOrders(1);
+        var orders = _orderService.GetOrders(1).ToList();
         return View(orders);
     }
 }
