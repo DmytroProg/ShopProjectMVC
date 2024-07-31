@@ -17,6 +17,7 @@ public class ShopProjectContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseLazyLoadingProxies()
+            .LogTo(Console.WriteLine, new[] { DbLoggerCategory.Database.Command.Name })
             .UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=ProductsDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
     }
 
