@@ -64,6 +64,6 @@ public class ProductService : IProductService
 
     public Task<Product> UpdateProduct(Product product)
     {
-        throw new NotImplementedException();
+        return _repository.Update(product);
     }
 }

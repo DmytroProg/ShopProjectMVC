@@ -24,7 +24,7 @@ public class ProductController : Controller
             return RedirectToAction("Login", "User");
         }*/
         HttpContext.Session.SetString("user", "Name");
-        HttpContext.Session.SetInt32("role", 0);
+        HttpContext.Session.SetInt32("role", (int)Role.Admin);
         HttpContext.Session.SetInt32("id", 1);
 
         var products = await _productService.GetAllAsync();
@@ -80,6 +80,26 @@ public class ProductController : Controller
         await _productService.BuyProduct(userId, id);
         return RedirectToAction("Index");
     } 
+
+    public async Task<IActionResult> Edit(int id)
+    {
+        var product = await _productService.GetProductById(id);
+        return View(product);
+    }
+
+    [HttpPost]
+    [ActionName("Edit")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> EditProduct(Product product, int id)
+    {
+        var productFromDb = await _productService.GetProductById(id);
+        productFromDb.Name = product.Name;
+        productFromDb.Description = product.Description;
+        productFromDb.Price = product.Price;
+        productFromDb.Count = product.Count;
+        await _productService.UpdateProduct(productFromDb);
+        return RedirectToAction("Index");
+    }
 }
 
 public static class TestHelper
